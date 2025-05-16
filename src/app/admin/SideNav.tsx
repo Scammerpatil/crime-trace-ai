@@ -113,12 +113,6 @@ const SideNav = ({ children }: { children: React.ReactNode }) => {
                     </div>
                     <hr className="my-2 border-base-content" />
                     <div className="flex flex-col">
-                      <Link
-                        className="text-left px-4 py-2 text-base-content hover:bg-base-200 transition duration-200"
-                        href={`/admin/profile`}
-                      >
-                        My Account
-                      </Link>
                       <button
                         onClick={handleLogout}
                         className="text-left px-4 py-2 text-base-content text-dark hover:bg-base-200 transition duration-200"

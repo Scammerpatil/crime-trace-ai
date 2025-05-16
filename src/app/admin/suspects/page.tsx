@@ -27,12 +27,13 @@ interface Suspect {
   name: string;
   email: string;
   contact: string;
-  age: number;
+  age: string;
   profileImage: string;
   criminalRecord: CrimeRecord[];
   lastKnownLocation: LastKnownLocation;
   knownAffiliations: string[];
   description: string;
+  isRegistered?: boolean;
 }
 
 export default function ManageSuspects() {
@@ -41,7 +42,7 @@ export default function ManageSuspects() {
     name: "",
     email: "",
     contact: "",
-    age: 0,
+    age: "",
     profileImage: "",
     criminalRecord: [],
     lastKnownLocation: {
@@ -67,6 +68,7 @@ export default function ManageSuspects() {
   };
 
   const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to delete this suspect?")) return;
     await toast.promise(axios.delete(`/api/suspects/delete?id=${id}`), {
       loading: "Deleting...",
       success: "Suspect deleted",
@@ -140,6 +142,23 @@ export default function ManageSuspects() {
     }
   };
 
+  const handleRegister = async (suspect: Suspect) => {
+    if (!suspect) {
+      toast.error("No suspect found");
+      return;
+    }
+    try {
+      const res = axios.post("/api/suspects/register", { suspect });
+      toast.promise(res, {
+        loading: "Registering...",
+        success: () => {
+          return "Suspect Registered Successfully";
+        },
+        error: (err: any) => `This just happened: ${err?.response?.data.error}`,
+      });
+    } catch (error) {}
+  };
+
   useEffect(() => {
     fetchSuspects();
   }, []);
@@ -159,6 +178,7 @@ export default function ManageSuspects() {
               <th>Contact</th>
               <th>Age</th>
               <th>Actions</th>
+              <th>Upload Images</th>
             </tr>
           </thead>
           <tbody>
@@ -195,11 +215,23 @@ export default function ManageSuspects() {
                       <IconTrash size={18} />
                     </button>
                   </td>
+                  <td>
+                    {s.isRegistered ? (
+                      <div className="badge badge-success">Registered</div>
+                    ) : (
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleRegister(s)}
+                      >
+                        Register
+                      </button>
+                    )}
+                  </td>
                 </tr>
               ))
             ) : (
               <tr>
-                <td colSpan={6} className="text-center">
+                <td colSpan={7} className="text-center">
                   No Suspects Found
                 </td>
               </tr>
@@ -254,18 +286,17 @@ export default function ManageSuspects() {
               }
             />
             <input
-              type="number"
+              type="text"
               placeholder="Age"
               className="input input-bordered w-full"
               value={formData.age}
               onChange={(e) =>
-                setFormData({ ...formData, age: parseInt(e.target.value) })
+                setFormData({ ...formData, age: e.target.value })
               }
             />
-            <input
-              type="text"
+            <textarea
               placeholder="Description"
-              className="input input-bordered w-full md:col-span-2"
+              className="textarea w-full md:col-span-2"
               value={formData.description}
               onChange={(e) =>
                 setFormData({ ...formData, description: e.target.value })

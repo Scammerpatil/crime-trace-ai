@@ -45,6 +45,10 @@ const SuspectSchema = new Schema({
     type: String,
     required: true,
   },
+  isRegistered: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Suspect =

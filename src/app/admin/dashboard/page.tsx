@@ -82,7 +82,9 @@ export default function Dashboard() {
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Contact Number</th>
+              <th>Email</th>
+              <th>Contact</th>
+              <th>Age</th>
             </tr>
           </thead>
           <tbody>
@@ -104,7 +106,9 @@ export default function Dashboard() {
                       </div>
                     </div>
                   </td>
+                  <td>{user.email}</td>
                   <td>{user.contact}</td>
+                  <td>{user.age}</td>
                 </tr>
               ))
             ) : (

@@ -19,4 +19,5 @@ export interface Suspect {
   knownAffiliations: string[];
   faceEmbedding: number[];
   description: string;
+  isRegistered: boolean;
 }

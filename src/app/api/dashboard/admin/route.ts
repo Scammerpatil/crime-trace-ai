@@ -1,7 +1,10 @@
+import dbConfig from "@/middlewares/db.config";
 import Case from "@/models/Case";
 import Investigator from "@/models/Investigator";
 import Suspect from "@/models/Suspect";
 import { NextResponse } from "next/server";
+
+dbConfig();
 
 export async function GET() {
   try {

@@ -2,7 +2,7 @@ import face_recognition
 import os
 import pickle
 
-IMAGE_DIR = "python/missingPersonImages"
+IMAGE_DIR = "python/SuspectImages"
 ENCODINGS_FILE = "python/encodings.pkl"
 
 encodings = []
